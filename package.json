@@ -1,6 +1,6 @@
 {
   "name": "tripadvisor-client",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A comprehensive TypeScript client library for TripAdvisor Content API. Built to address the lack of official SDK and unreliable field type documentation.",
   "keywords": [
     "tripadvisor",
