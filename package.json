@@ -54,6 +54,7 @@
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:run": "vitest run",
+    "test:watch": "vitest --watch",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
