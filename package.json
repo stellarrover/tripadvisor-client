@@ -6,7 +6,15 @@
     "tripadvisor",
     "api",
     "client",
-    "typescript"
+    "typescript",
+    "trip-advisor",
+    "travel",
+    "restaurant",
+    "hotel",
+    "reviews",
+    "content-api",
+    "sdk",
+    "wrapper"
   ],
   "homepage": "https://github.com/stellarrover/tripadvisor-client#readme",
   "bugs": {
