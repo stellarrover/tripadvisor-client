@@ -16,7 +16,7 @@ export interface RequestOptions {
 /**
  * HTTP response
  */
-export interface HttpResponse<T = any> {
+export interface HttpResponse<T = unknown> {
   data: T;
   status: number;
   headers: Headers;
@@ -37,7 +37,7 @@ export class HttpClient {
    */
   async request<T extends z.ZodSchema>(
     endpoint: string,
-    payload: Record<string, any>,
+    payload: Record<string, unknown>,
     payloadSchema: z.ZodSchema,
     responseSchema: T,
     options: RequestOptions = {}
@@ -51,7 +51,7 @@ export class HttpClient {
     } = options;
 
     // Validate request payload
-    let validatedPayload: Record<string, any>;
+    let validatedPayload: Record<string, unknown>;
     try {
       validatedPayload = payloadSchema.parse(payload);
     } catch (error) {
@@ -69,7 +69,7 @@ export class HttpClient {
   /**
    * Build complete URL
    */
-  private buildUrl(endpoint: string, payload: Record<string, any>): string {
+  private buildUrl(endpoint: string, payload: Record<string, unknown>): string {
     const baseUrl = this.config.getBaseUrl();
     const params = new URLSearchParams();
 

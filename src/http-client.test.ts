@@ -5,7 +5,8 @@ import { TripAdvisorError, ValidationError } from './errors.js';
 import { HttpClient } from './http-client.js';
 
 // Mock fetch globally
-global.fetch = vi.fn();
+const mockFetch = vi.fn();
+global.fetch = mockFetch as typeof fetch;
 
 describe('HttpClient', () => {
   let httpClient: HttpClient;
@@ -43,7 +44,7 @@ describe('HttpClient', () => {
         data: [{ location_id: '123', name: 'Test Location' }],
       };
 
-      (fetch as any).mockResolvedValueOnce({
+      mockFetch.mockResolvedValueOnce({
         ok: true,
         status: 200,
         headers: new Headers({ 'content-type': 'application/json' }),
@@ -58,7 +59,7 @@ describe('HttpClient', () => {
       );
 
       expect(result).toEqual(mockResponse);
-      expect(fetch).toHaveBeenCalledWith(
+      expect(mockFetch).toHaveBeenCalledWith(
         expect.stringContaining('https://api.content.tripadvisor.com/api/v1/location/search'),
         expect.objectContaining({
           method: 'GET',
@@ -79,7 +80,7 @@ describe('HttpClient', () => {
     it('should handle custom request options', async () => {
       const mockResponse = { data: [] };
 
-      (fetch as any).mockResolvedValueOnce({
+      mockFetch.mockResolvedValueOnce({
         ok: true,
         status: 200,
         headers: new Headers(),
@@ -94,7 +95,7 @@ describe('HttpClient', () => {
         retryDelay: 500,
       });
 
-      expect(fetch).toHaveBeenCalledWith(
+      expect(mockFetch).toHaveBeenCalledWith(
         expect.any(String),
         expect.objectContaining({
           method: 'POST',
@@ -109,7 +110,7 @@ describe('HttpClient', () => {
       const mockResponse = { data: [] };
 
       // First call fails, second succeeds
-      (fetch as any).mockRejectedValueOnce(new Error('network error')).mockResolvedValueOnce({
+      mockFetch.mockRejectedValueOnce(new Error('network error')).mockResolvedValueOnce({
         ok: true,
         status: 200,
         headers: new Headers(),
@@ -125,11 +126,11 @@ describe('HttpClient', () => {
       );
 
       expect(result).toEqual(mockResponse);
-      expect(fetch).toHaveBeenCalledTimes(2);
+      expect(mockFetch).toHaveBeenCalledTimes(2);
     });
 
     it('should throw error after max retries', async () => {
-      (fetch as any).mockRejectedValue(new Error('network error'));
+      mockFetch.mockRejectedValue(new Error('network error'));
 
       await expect(
         httpClient.request('/location/search', { searchQuery: 'test' }, mockPayloadSchema, mockResponseSchema, {
@@ -138,7 +139,7 @@ describe('HttpClient', () => {
         })
       ).rejects.toThrow('network error');
 
-      expect(fetch).toHaveBeenCalledTimes(3); // Initial + 2 retries
+      expect(mockFetch).toHaveBeenCalledTimes(3); // Initial + 2 retries
     });
 
     it('should handle API error responses', async () => {
@@ -150,7 +151,7 @@ describe('HttpClient', () => {
         },
       };
 
-      (fetch as any).mockResolvedValueOnce({
+      mockFetch.mockResolvedValueOnce({
         ok: true,
         status: 200,
         headers: new Headers(),
@@ -163,7 +164,7 @@ describe('HttpClient', () => {
     });
 
     it('should handle non-JSON responses', async () => {
-      (fetch as any).mockResolvedValueOnce({
+      mockFetch.mockResolvedValueOnce({
         ok: true,
         status: 200,
         headers: new Headers(),
@@ -178,7 +179,7 @@ describe('HttpClient', () => {
     it('should build URL with correct parameters', async () => {
       const mockResponse = { data: [] };
 
-      (fetch as any).mockResolvedValueOnce({
+      mockFetch.mockResolvedValueOnce({
         ok: true,
         status: 200,
         headers: new Headers(),
@@ -202,7 +203,7 @@ describe('HttpClient', () => {
         mockResponseSchema
       );
 
-      const callUrl = (fetch as any).mock.calls[0][0];
+      const callUrl = mockFetch.mock.calls[0][0];
       expect(callUrl).toContain('https://api.content.tripadvisor.com/api/v1/location/search');
       expect(callUrl).toContain('key=test-key');
       expect(callUrl).toContain('searchQuery=test+location');
@@ -213,7 +214,7 @@ describe('HttpClient', () => {
     it('should filter out undefined and null parameters', async () => {
       const mockResponse = { data: [] };
 
-      (fetch as any).mockResolvedValueOnce({
+      mockFetch.mockResolvedValueOnce({
         ok: true,
         status: 200,
         headers: new Headers(),
@@ -239,7 +240,7 @@ describe('HttpClient', () => {
         mockResponseSchema
       );
 
-      const callUrl = (fetch as any).mock.calls[0][0];
+      const callUrl = mockFetch.mock.calls[0][0];
       expect(callUrl).toContain('searchQuery=test');
       expect(callUrl).toContain('validParam=value');
       expect(callUrl).not.toContain('language=');
@@ -251,7 +252,7 @@ describe('HttpClient', () => {
     it('should handle timeout errors', async () => {
       const abortError = new Error('timeout');
       abortError.name = 'AbortError';
-      (fetch as any).mockRejectedValue(abortError);
+      mockFetch.mockRejectedValue(abortError);
 
       await expect(
         httpClient.request(
@@ -264,7 +265,7 @@ describe('HttpClient', () => {
     });
 
     it('should handle network errors', async () => {
-      (fetch as any).mockRejectedValue(new Error('Network request failed'));
+      mockFetch.mockRejectedValue(new Error('Network request failed'));
 
       await expect(
         httpClient.request(
