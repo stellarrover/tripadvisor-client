@@ -40,12 +40,12 @@ vi.mock('./http-client.js', () => ({
 
 describe('TripAdvisorClient', () => {
   let client: TripAdvisorClient;
-  let mockHttpClient: any;
+  let mockHttpClient: { request: ReturnType<typeof vi.fn> };
 
   beforeEach(() => {
     vi.clearAllMocks();
     client = new TripAdvisorClient({ apiKey: 'test-key' });
-    mockHttpClient = (client as any).httpClient;
+    mockHttpClient = (client as unknown as { httpClient: { request: ReturnType<typeof vi.fn> } }).httpClient;
   });
 
   describe('constructor', () => {

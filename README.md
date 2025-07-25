@@ -1,20 +1,13 @@
 # TripAdvisor Client
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![npm version](https://img.shields.io/npm/v/tripadvisor-client.svg)](https://www.npmjs.com/package/tripadvisor-client)
 [![Node.js](https://img.shields.io/badge/Node.js-20+-green.svg)](https://nodejs.org/)
 
 <!-- Add Codecov badge once repository is published to GitHub -->
 <!-- [![Code Coverage](https://codecov.io/gh/YOUR_USERNAME/YOUR_REPO/branch/main/graph/badge.svg)](https://codecov.io/gh/YOUR_USERNAME/YOUR_REPO) -->
 
 A comprehensive TypeScript client library for TripAdvisor Content API. Built to address the lack of official SDK and unreliable field type documentation.
-
-<!-- > **Note**: Once this project is published to GitHub and NPM, you can add dynamic badges. See [SETUP_BADGES.md](./SETUP_BADGES.md) for detailed instructions on setting up badges like:
->
-> - NPM version badge
-> - GitHub Actions CI/CD badge
-> - Code coverage badge
-> - Bundle size badge
-> - Download count badge -->
 
 ## ✨ Features
 
