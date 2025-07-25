@@ -80,6 +80,7 @@ jobs:
         with:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
+          scope: '@felixliu'
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
@@ -105,7 +106,15 @@ jobs:
       - name: Build project
         run: pnpm run build
 
+      - name: Debug NPM configuration
+        run: |
+          echo "NPM registry: $(npm config get registry)"
+          echo "NPM scope: $(npm config get scope)"
+          echo "NPM token exists: ${{ secrets.NPM_TOKEN != '' }}"
+
       - name: Publish to NPM
-        run: pnpm publish --no-git-checks
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+          pnpm publish --no-git-checks
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
