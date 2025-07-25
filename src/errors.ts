@@ -18,7 +18,7 @@ export class TripAdvisorError extends Error {
    * Create error instance from API response
    */
   static fromApiResponse(response: any): TripAdvisorError {
-    if (response.error) {
+    if (response?.error) {
       return new TripAdvisorError(
         response.error.message || 'Unknown API error',
         response.error.code,
@@ -26,7 +26,7 @@ export class TripAdvisorError extends Error {
         true
       );
     }
-    if (response.Message) {
+    if (response?.Message) {
       return new TripAdvisorError(response.Message, response.code, response.type, true);
     }
     return new TripAdvisorError('Unknown API error', undefined, undefined, true);
@@ -36,7 +36,7 @@ export class TripAdvisorError extends Error {
    * Check if response is an API error
    */
   static isApiError(response: any): boolean {
-    return !!(response.error || response.Message);
+    return !!(response?.error || response?.Message);
   }
 }
 
