@@ -57,7 +57,7 @@
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,md}\"",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
-    "prepublishOnly": "npm run clean && npm run build && npm run test:run",
+    "prepublishOnly": "npm run clean && npm run build",
     "spell-check": "cspell \"src/**/*.{ts,tsx,js,jsx,md}\"",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",

@@ -7,29 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **BREAKING**: Removed automatic NPM publishing from CI/CD pipeline
+- Updated GitHub Actions workflow to separate CI and publishing concerns
+- Added manual release workflow with automatic version bumping and tagging
+- Updated `prepublishOnly` script to remove redundant test execution (tests now run in CI)
+
 ### Added
 
-- Initial project setup
-- TripAdvisorClient class with basic API methods
-- TypeScript type definitions for all API responses
-- Comprehensive test suite using Vitest
-- ESLint configuration for code quality
-- Build configuration using tsup
-- Example usage and documentation
+- New `Publish to NPM` workflow for manual releases
+- Support for semantic versioning (patch/minor/major) via workflow inputs
+- Automatic Git tag creation and GitHub Release generation
+- Dry run mode for testing release process without actual publishing
+- Comprehensive release documentation in `RELEASE.md`
 
-### Features
+### Removed
 
-- `searchLocations()` - Search for locations by query
-- `getLocationDetails()` - Get detailed information about a location
-- `getReviews()` - Get reviews for a location
-- `getPhotos()` - Get photos for a location
-- `getNearbyLocations()` - Search for locations near coordinates
-- `request()` - Make custom API requests
+- Automatic publishing on main branch pushes
+- Redundant test execution in `prepublishOnly` script
 
-### Technical
+## [0.1.1] - 2024-01-XX
 
-- ES module support (`"type": "module"`)
-- Full TypeScript support with strict type checking
-- Modern Node.js features (ES2022 target)
-- Comprehensive error handling
-- Flexible configuration options
+### Added
+
+- Initial release of TripAdvisor Client library
+- TypeScript support with comprehensive type definitions
+- Location search functionality
+- Location details retrieval
+- Reviews and photos API endpoints
+- Error handling and retry logic
+- Comprehensive documentation and examples

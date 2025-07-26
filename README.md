@@ -62,6 +62,25 @@ const reviews = await client.locationReviews('12345', {
 const photos = await client.locationPhotos('12345', 20);
 ```
 
+## 🚀 Development & Release
+
+### Publishing
+
+This project uses GitHub Actions for automated releases. To publish a new version:
+
+1. Go to the [GitHub Actions](https://github.com/stellarrover/tripadvisor-client/actions) page
+2. Select "Publish to NPM" workflow
+3. Click "Run workflow"
+4. Choose version type (patch/minor/major) and whether to do a dry run
+5. The workflow will automatically:
+   - Run all tests and quality checks
+   - Bump version in `package.json`
+   - Create and push Git tags
+   - Publish to NPM
+   - Create GitHub Release
+
+For detailed release instructions, see [RELEASE.md](./RELEASE.md).
+
 ## 📖 API Reference
 
 ### TripAdvisorClient
